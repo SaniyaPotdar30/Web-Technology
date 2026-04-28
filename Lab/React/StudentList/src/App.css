@@ -1,0 +1,56 @@
+/* Page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Heading */
+h1 {
+  color: #333;
+  margin-top: 20px;
+}
+
+/* button */
+button {
+  background-color: #060933;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  margin: 15px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #66599b;
+}
+
+/* student card */
+.student-card {
+  background-color: white;
+  margin: 15px auto;
+  padding: 15px;
+  width: 260px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* text for card */
+.student-card h2 {
+  margin: 6px 0;
+  font-size: 18px;
+  color: #444;
+}
+
+.student-card {
+  transition: 0.3s;
+}
+
+.student-card:hover {
+  background-color: #8d98f7;
+  transform: scale(1.05);
+}

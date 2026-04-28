@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Events Demo</title>
+
+    <style>
+        body {
+            background-color: #414141;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 15px;
+        }
+
+        img {
+            width: 200px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            color: lightblue;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Amazing Images (Click to Remove)</h2>
+
+    <ul id="images">
+        <li>
+            <img id="photoshop"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg"
+                alt="Photoshop Logo">
+        </li>
+
+        <li>
+            <img id="japan"
+                src="https://images.unsplash.com/photo-1501785888041-af3ef285b470"
+                onclick="alert('Hi')"
+                alt="Mount Fuji">
+        </li>
+
+        <li>
+            <img id="Nature"
+                src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b"
+                alt="Nature Image">
+        </li>
+
+        <li>
+            <img id="photoman"
+                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+                alt="Photographer">
+        </li>
+
+        <li>
+            <img id="tiger"
+                src="https://images.unsplash.com/photo-1546182990-dffeafbe841d"
+                alt="Tiger">
+        </li>
+
+        <li>
+            <a href="https://google.com" id="google">Visit Google</a>
+        </li>
+    </ul>
+  </body>
+  <script>
+  document.getElementById('tiger').onclick = function(){
+  alert('Hi i am tiger')
+  }
+  </script>
+
+  <script>
+    document.getElementById('photoman').addEventListener('click', function(e){
+        console.log(e);
+        
+    },true)
+  </script>
+
+  <script>
+    document.getElementById('Nature').addEventListener('click', function(){
+        console.log("Clicking nature");
+        
+    })
+  </script>
+
+  <script>
+    document.getElementById('images').addEventListener('click', function(){
+        console.log("clicking inside ul");
+        
+    },true)
+  </script>
+
+  <script>document.getElementById('google').addEventListener('click', function(e){
+    console.log("google clicked");
+    e.preventDefault()
+    
+  })</script>
+  </html>
+
+<!-- event is an action that happens in the browser. Ex. clicking a button,
+moving a mouse, pressing a key, submitting form, loading a page.
+js can detect these events and respond to them.
+
+Types of events- 
+1. Mouse - click, dblclick, mousehover, mouseout
+2. Keyboard - keydown, keyup
+3. Browser - load, resize, scroll
+
+writing onClick in html is not a good way so we should write it 
+in script tag. 
+-select element
+-assign function to click event, when click function runs
+-
+html should contain structure and js contains logic
+
+ACTIVITIES - j query use, type ,time stamp , default prevented, target, source-ele,
+current tag, client x, client y, screen x, screen y, alt key, ctrl, shift
+- image should be removed on click, on refresh it should come as it is
+
+addEventListener - is a js method used to "attach an event handler to html ele"
+so that specific function runs when event occurs.
+
+event propagation - event bubly - inner ele to the parent and parent to the document 
+if we click nature image o/p is clicking nature then clicking inside ul
+cause child-> parent buble up
+
+if you write true then, order is parent -> child
+-->

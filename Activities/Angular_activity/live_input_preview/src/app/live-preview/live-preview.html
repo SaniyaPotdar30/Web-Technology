@@ -1,0 +1,12 @@
+<div class="box">
+  <h2>Live Input Preview</h2>
+
+  <!-- Input Box -->
+  <input type="text" [(ngModel)]="text" placeholder="Type something...">
+
+  <!-- Live Output -->
+  <p>Preview: {{ text }}</p>
+
+  <!-- Character Count -->
+  <p>Character Count: {{ text.length }}</p>
+</div>

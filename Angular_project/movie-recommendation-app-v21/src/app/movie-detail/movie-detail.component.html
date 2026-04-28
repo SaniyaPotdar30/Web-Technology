@@ -1,0 +1,41 @@
+<!-- movie-detail.component.html -->
+<div class="container">
+
+  <!-- *ngIf shows movie details only when movie is found -->
+  <div *ngIf="movie; else notFound">
+    <h1>🎬 {{ movie.title }}</h1>
+
+    <div class="detail-card">
+      <table class="detail-table">
+        <tr>
+          <th>Genre</th>
+          <td>{{ movie.genre }}</td>
+        </tr>
+        <tr>
+          <th>Rating</th>
+          <td>⭐ {{ movie.rating }} / 10</td>
+        </tr>
+        <tr>
+          <th>Movie ID</th>
+          <td>#{{ movie.id }}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td>{{ movie.description }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <button class="btn-secondary" (click)="goBack()">← Back to Movie List</button>
+  </div>
+
+  <!-- Shown when no movie is found for the given ID -->
+  <ng-template #notFound>
+    <div class="not-found">
+      <h2>❌ Movie Not Found</h2>
+      <p>The movie you are looking for does not exist.</p>
+      <button class="btn-secondary" (click)="goBack()">← Back to Movie List</button>
+    </div>
+  </ng-template>
+
+</div>

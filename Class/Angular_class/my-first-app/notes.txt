@@ -1,0 +1,107 @@
+ng serve OR ng s - to run angular project
+common server port -4200
+
+1. package.json - config file, info. about project
+2. packagelog,json - config file with detailed info.
+3. angular.json- project config file. 
+4. style.css- global css
+5. gitignore - version control file
+6. editorconfig - vs code style changes
+7. index.html - main html file, loads angular
+8. main.ts - entry point file
+9. app.config.ts - app config file
+10. main folder is main
+11. app folder is root folder 
+
+app.html is root folder - u can see the changes made in this fie on the server
+
+DATA TYPES - 1. PRIMITIVE 2. NON-PRIMITIVE
+DECLARATION---
+
+name : string = "Saniya" 
+age : number = 2
+isActive: boolean = true
+data : any = null
+
+--- how to create components in angular ---
+components - UI blocks.When we create components, it creates 4 files->
+                                            1.html
+                                            2.css - 
+                                            3.ts - logic file
+                                            4.spec.ts - unit testing file
+command - ng generate component student-list
+
+--- DATA BINDING --
+2 types - one way, two way 
+ interpolation - {{value}}
+ property - [property]="value" 
+ event - (event)= "handler()"
+ two-way - [(ngModel)]
+
+data binding - connect UI to code
+
+ng if-else, for loop, switch cases- how to use in angular
+
+<!-- app.component.html -->
+
+<!-- IF-ELSE using ngIf -->
+<p *ngIf="isLoggedIn; else loginMsg">Welcome User!</p>
+<ng-template #loginMsg>
+  <p>Please login</p>
+</ng-template>
+
+<hr>
+
+<!-- FOR LOOP using ngFor -->
+<ul>
+  <li *ngFor="let item of items">
+    {{ item }}
+  </li>
+</ul>
+
+<hr>
+
+<!-- SWITCH CASE using ngSwitch -->
+<div [ngSwitch]="role">
+  <p *ngSwitchCase="'admin'">Admin Panel</p>
+  <p *ngSwitchCase="'user'">User Dashboard</p>
+  <p *ngSwitchDefault>Guest View</p>
+</div>
+
+
+// app.component.ts
+
+export class AppComponent {
+  isLoggedIn = true;
+
+  items = ['Apple', 'Mango', 'Banana'];
+
+  role = 'admin';
+}
+
+DIRECTIVE - think of DIRECTIVE like magic wands that can change your web page without 
+rewriting it.
+
+TYPES---
+1. structural- changes the structure of your page like add,remove and repeated things.
+for , if, if-else, switch case
+
+2. attribute- changes look or style
+
+ACTIVITY- 1. deep study about directives with example
+2. two way binding def -interpolation->property binding(add image)->
+
+
+----MODULES---
+we are using angular 21 version. modules are optionals.
+we can now use stand alone components.
+
+---SERVICES---
+services - it is like a helper class.
+used to store data or share logic that many components can use.
+instead of writing same code in every component, we can write once in service file.
+
+ng g s service_name
+
+---ROUTING---
+  

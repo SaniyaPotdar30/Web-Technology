@@ -1,0 +1,13 @@
+<!-- App root template -->
+<!-- The navbar is always visible; router-outlet renders the active route component -->
+
+<nav class="navbar">
+  <div class="nav-brand">Movie Storage</div>
+  <div class="nav-links">
+    <a routerLink="/movies" routerLinkActive="active">Movies</a>
+    <a routerLink="/add" routerLinkActive="active">Add Movie</a>
+  </div>
+</nav>
+
+<!-- Router outlet is used to display different components based on URL. -->
+<router-outlet></router-outlet> <!-- this is where page loads -->

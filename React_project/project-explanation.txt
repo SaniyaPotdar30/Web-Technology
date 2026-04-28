@@ -1,0 +1,98 @@
+Project Name: Movie Watchlist App
+
+=========================================
+WHAT IS THIS PROJECT?
+=========================================
+This is a simple React application that helps you keep track of movies you want to watch or have already watched. You can add new movies, view a list of all your movies, mark them as "Watched", or delete them from the list.
+
+=========================================
+FILES, COMPONENTS, AND WHAT THEY DO
+=========================================
+
+1. src/main.jsx
+- What it is: The starting point of the app.
+- Functionality: It takes our main React code and injects it into the actual web browser window.
+
+2. src/index.css
+- What it is: The stylesheet for the app.
+- Functionality: It contains all the design rules (colors, spacing, font sizes). We kept it simple so it is very easy for a beginner to read and change.
+
+3. src/App.jsx
+- What it is: The "Parent" component that runs the show.
+- Functionality:
+  * State Management: It holds the main memory of the app (the list of movies) using `useState`.
+  * Local Storage: It automatically saves your movies to the browser's memory using `useEffect` so you don't lose data when you refresh the page.
+  * Logic: It contains the actual functions that Add, Delete, and Update movies.
+  * Routing: It acts like a traffic cop, using React Router to show different pages (Home, Movie List, Add Movie) based on where you click.
+
+4. src/components/Navbar.jsx
+- What it is: The navigation menu at the top.
+- Functionality: It contains clickable links that let you move between the different pages of the app instantly.
+
+5. src/pages/Home.jsx
+- What it is: The landing page.
+- Functionality: It takes your movie list data and calculates simple statistics: Total movies, how many you've watched, and how many are remaining. 
+
+6. src/pages/MovieList.jsx
+- What it is: The page that shows all your movies.
+- Functionality: It loops through your movie data (using the `.map()` function) and creates a text list showing each movie's name, rating, and status. It also gives you buttons next to each movie to mark it as "Watched" or to "Delete" it.
+
+7. src/pages/AddMovie.jsx
+- What it is: The form page for adding new movies.
+- Functionality: It gives you input boxes to type a movie name and a rating out of 10. When you submit the form, it sends that new data up to App.jsx to be saved, and then automatically takes you to the Movie List page to see it.
+
+=========================================
+PROJECT WORKFLOW (HOW IT RUNS)
+=========================================
+
+1. Starts Up: 
+When you run the app, Vite loads the `index.html`, which then runs `main.jsx`. 
+
+2. Loads App:
+`main.jsx` puts the `App.jsx` component onto the screen.
+
+3. Initializes Data:
+`App.jsx` wakes up and immediately checks the browser's Local Storage to see if you have any saved movies. If yes, it loads them. If no, it starts with an empty list.
+
+4. Shows the Screen:
+`App.jsx` shows the `Navbar` (so you can click links) and then looks at the web address. Since you just opened it, the address is usually "/", so it displays the `Home.jsx` page.
+
+5. Adding a Movie (User Action):
+- You click "Add Movie" on the Navbar.
+- The address changes to "/add", and `App.jsx` switches the screen to show the `AddMovie.jsx` form.
+- You type in a movie name and rating, and click Submit.
+- `AddMovie.jsx` takes that info and says, "Hey App.jsx, add this to the list!"
+- `App.jsx` adds it to the main list and automatically saves the updated list to Local Storage.
+
+6. Viewing the List (User Action):
+- After adding, you are redirected to "/movies".
+- `App.jsx` sees the address changed, so it hides the Add form and shows the `MovieList.jsx` page instead.
+- It hands the updated list of movies to `MovieList.jsx`.
+- `MovieList.jsx` takes that list and loops through it, drawing a nice row for your movie on the screen.
+
+7. Updating/Deleting (User Action):
+- If you click "Mark Watched" or "Delete" next to a movie, `MovieList.jsx` yells up to `App.jsx` to say which movie button was clicked.
+- `App.jsx` does the math to update or delete it from the main list.
+- `App.jsx` saves the new list to Local Storage again, and React automatically redraws the screen so you instantly see the change.
+
+=========================================
+HOW WE BUILT & RAN THIS PROJECT (COMMANDS)
+=========================================
+
+1. Scaffold the React App using Vite
+We ran this command to generate the base React folder structure using the Vite build tool:
+> npx create-vite@latest ./ --template react
+
+2. Install Core Dependencies
+We needed to download React and all the base packages that Vite set up:
+> npm install
+
+3. Install React Router
+Because we wanted different pages (Home, Movie List, Add Movie) without the browser reloading, we installed the official routing library:
+> npm install react-router-dom
+
+4. Start the Development Server
+To actually run the app locally and view it in the browser, we ran:
+> npm run dev
+
+This starts a local server (usually at http://localhost:5173/) where you can see and interact with your app.

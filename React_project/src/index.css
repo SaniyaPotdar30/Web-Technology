@@ -1,0 +1,115 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  background-color: #121212;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar */
+nav {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Typography */
+h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+/* Forms */
+form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+/* Hide Spinner for Number Input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Buttons */
+button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-right: 10px;
+}
+
+button.btn-blue {
+  background-color: #007bff;
+}
+
+button.btn-red {
+  background-color: #dc3545;
+}
+
+/* Movie List */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #1e1e1e;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+}
+
+.movie-details {
+  margin-bottom: 10px;
+}

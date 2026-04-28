@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess The Number Game</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #message {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        #hint {
+            margin-top: 5px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Guess The Number (1 - 20)</h2>
+    <p>You have only 5 attempts!</p>
+
+    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <br>
+
+    <button id="submitBtn">Submit Guess</button>
+    <button id="restartBtn">Restart</button>
+
+    <p id="message"></p>
+    <p id="hint"></p>
+    <p id="attempts"></p>
+
+<script>
+
+    let randomNumber = Math.floor(Math.random() * 20) + 1;
+    let attemptCount = 0;
+    const maxAttempts = 5;
+
+    const guessInput = document.getElementById("guessInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const message = document.getElementById("message");
+    const hint = document.getElementById("hint");
+    const attempts = document.getElementById("attempts");
+
+    submitBtn.addEventListener("click", function() {
+
+        const userGuess = Number(guessInput.value);
+
+        if (!userGuess) {
+            message.textContent = " Please enter a valid number!";
+            return;
+        }
+
+        if (attemptCount >= maxAttempts) {
+            return;
+        }
+
+        attemptCount++;
+        attempts.textContent = "Attempts: " + attemptCount + " / " + maxAttempts;
+
+        if (userGuess === randomNumber) {
+            message.textContent = " Correct! You guessed it!";
+            message.style.color = "green";
+            hint.textContent = "";
+            submitBtn.disabled = true;  // Disable after correct guess
+        }
+        else if (userGuess > randomNumber) {
+            message.textContent = " Too High!";
+            message.style.color = "red";
+            hint.textContent = "Difference: " + (userGuess - randomNumber);
+        }
+        else {
+            message.textContent = " Too Low!";
+            message.style.color = "red";
+            hint.textContent = "Difference: " + (randomNumber - userGuess);
+        }
+
+        if (attemptCount === maxAttempts && userGuess !== randomNumber) {
+            message.textContent = "Game Over! Number was " + randomNumber;
+            submitBtn.disabled = true;
+        }
+
+    });
+
+    restartBtn.addEventListener("click", function() {
+
+        randomNumber = Math.floor(Math.random() * 20) + 1;
+        attemptCount = 0;
+
+        guessInput.value = "";
+        message.textContent = "";
+        hint.textContent = "";
+        attempts.textContent = "";
+        submitBtn.disabled = false;
+
+    });
+
+</script>
+
+</body>
+</html>

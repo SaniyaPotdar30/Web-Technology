@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            transition: 0.4s;
+            color: #333;
+        }
+
+        /* Minimal Pastel Background Themes */
+        .home-bg {
+            background-color: #eef4ff;   /* soft blue */
+        }
+
+        .about-bg {
+            background-color: #f5efff;   /* soft lavender */
+        }
+
+        .projects-bg {
+            background-color: #eafaf1;   /* soft mint */
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background: #2f3640;
+        }
+
+        nav button {
+            padding: 8px 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        nav button:hover {
+            background: #dcdde1;
+        }
+
+        .active-btn {
+            background: #4a69bd;
+            color: white;
+        }
+
+        section {
+            display: none;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .active-section {
+            display: block;
+        }
+
+        .project-card {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: white;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Dark Mode */
+        .dark {
+            background: #121212 !important;
+            color: white;
+        }
+
+        .dark nav {
+            background: #000;
+        }
+
+        .dark nav button {
+            background: #333;
+            color: white;
+        }
+
+        .dark .active-btn {
+            background: #6c5ce7;
+        }
+
+        .dark .project-card {
+            background: #1e1e1e;
+        }
+    </style>
+</head>
+<body class="home-bg">
+
+<nav>
+    <button class="nav-btn active-btn" onclick="showSection('home', this)">Home</button>
+    <button class="nav-btn" onclick="showSection('about', this)">About</button>
+    <button class="nav-btn" onclick="showSection('projects', this)">Projects</button>
+    <button id="themeBtn">Toggle Theme</button>
+</nav>
+
+<section id="home" class="active-section">
+    <h2>Welcome to My Portfolio</h2>
+    <p>Frontend Developer 🚀</p>
+</section>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>I love building interactive web applications using JavaScript and DOM.</p>
+</section>
+
+<section id="projects">
+    <h2>My Projects</h2>
+    <button id="loadProjects">Load Projects</button>
+    <div id="projectContainer"></div>
+</section>
+
+<script>
+
+function showSection(id, button) {
+
+    // Remove active section
+    const sections = document.querySelectorAll("section");
+    sections.forEach(sec => sec.classList.remove("active-section"));
+
+    document.getElementById(id).classList.add("active-section");
+
+    // Remove active button
+    const buttons = document.querySelectorAll(".nav-btn");
+    buttons.forEach(btn => btn.classList.remove("active-btn"));
+    button.classList.add("active-btn");
+
+    // Remove old background classes
+    document.body.classList.remove("home-bg", "about-bg", "projects-bg");
+
+    // Add new background based on section
+    if (id === "home") {
+        document.body.classList.add("home-bg");
+    }
+    else if (id === "about") {
+        document.body.classList.add("about-bg");
+    }
+    else if (id === "projects") {
+        document.body.classList.add("projects-bg");
+    }
+}
+
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click", function() {
+    document.body.classList.toggle("dark");
+});
+
+const loadBtn = document.getElementById("loadProjects");
+const projectContainer = document.getElementById("projectContainer");
+
+loadBtn.addEventListener("click", function() {
+
+    projectContainer.innerHTML = "";
+
+    const projects = ["Quiz App", "Guess The Number Game", "Image Gallery"];
+
+    projects.forEach(p => {
+        const div = document.createElement("div");
+        div.classList.add("project-card");
+        div.textContent = p;
+        projectContainer.appendChild(div);
+    });
+
+});
+
+</script>
+
+</body>
+</html>

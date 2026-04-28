@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpellTrain</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <h1>SpellTrain</h1> 
+    <p>German Vocabulary Trainer</p>
+  </header>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen active">
+    <h2>Choose a mode</h2>
+
+    <div class="card" onclick="startDictation()">
+      <h3>Daily Dictation</h3>
+      <p>Listen to a German word, type it and its meaning.</p>
+    </div>
+
+    <div class="card" onclick="startFlashcards()">
+      <h3>Flashcards</h3>
+      <p>Flip through today's words and check your memory.</p>
+    </div>
+
+    <p class="note">Today's session — 8 words</p>
+  </div>
+
+
+  <!-- DICTATION -->
+  <div id="screen-dictation" class="screen">
+    <div class="top-bar">
+      <span id="dict-counter">Word 1 of 8</span>
+      <span id="dict-score">Score: 0</span>
+    </div>
+
+    <div class="progress-bar">
+      <div id="dict-progress" style="width: 0%;"></div>
+    </div>
+
+    <div class="card">
+      <button id="speak-btn" onclick="speakCurrentWord()">Hear the word</button>
+
+      <label>German word:</label>
+      <input id="dict-german-input" type="text" placeholder="e.g. Buch" autocomplete="off" />
+
+      <label>English meaning:</label>
+      <input id="dict-meaning-input" type="text" placeholder="e.g. book" autocomplete="off" />
+
+      <div id="dict-feedback" class="feedback"></div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="checkDictationAnswer()">Check Answer</button>
+        <button class="btn-secondary" onclick="speakCurrentWord()">Repeat</button>
+      </div>
+    </div>
+
+    <button class="btn-link" onclick="goHome()">Back to Home</button>
+  </div>
+
+
+  <!-- CORRECTION DRILL -->
+  <div id="screen-correction" class="screen">
+    <div class="card">
+      <h3>Correction Drill</h3>
+      <p>You got this wrong. Write it 5 times to remember it.</p>
+
+      <div id="correction-target" class="target-word"></div>
+
+      <div class="ticks">
+        <div class="tick" id="tick-0">1</div>
+        <div class="tick" id="tick-1">2</div>
+        <div class="tick" id="tick-2">3</div>
+        <div class="tick" id="tick-3">4</div>
+        <div class="tick" id="tick-4">5</div>
+      </div>
+
+      <label id="correction-label">Write it (1 / 5):</label>
+      <input id="correction-input" type="text" placeholder="Type the word here..." autocomplete="off" />
+
+      <div id="correction-feedback" class="feedback"></div>
+
+      <button class="btn-primary" onclick="checkCorrectionInput()">Submit</button>
+    </div>
+  </div>
+
+
+  <!-- MEANING MCQ -->
+  <div id="screen-mcq" class="screen">
+    <div class="card">
+      <p class="small-label">What does this word mean?</p>
+      <div id="mcq-word" class="big-word"></div>
+      <div id="mcq-options" class="mcq-options"></div>
+      <div id="mcq-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+
+  <!-- FLASHCARDS -->
+  <div id="screen-flashcard" class="screen">
+    <div class="top-bar">
+      <span>Flashcards</span>
+      <span id="fc-counter">1 / 8</span>
+    </div>
+
+    <div class="flashcard-wrap" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <p class="small-label">German Word</p>
+          <p class="big-word" id="fc-german">Buch</p>
+        </div>
+        <div class="flashcard-back">
+          <p class="small-label">English Meaning</p>
+          <p class="big-word" id="fc-meaning">book</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">Click the card to flip it — or press Space</p>
+
+    <div class="btn-row center">
+      <button class="btn-secondary" onclick="prevCard()">Prev</button>
+      <button class="btn-primary" onclick="nextCard()">Next</button>
+    </div>
+
+    <button class="btn-link" onclick="goHome()">Back to Home</button>
+  </div>
+
+
+  <!-- RESULTS -->
+  <div id="screen-results" class="screen">
+    <h2>Results</h2>
+
+    <div class="card center">
+      <div id="res-score" class="score-big"></div>
+      <p class="small-label">Final Score</p>
+      <p id="res-grade"></p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div id="res-correct" class="stat-num green"></div>
+        <p>Correct</p>
+      </div>
+      <div class="stat-box">
+        <div id="res-wrong" class="stat-num red"></div>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-box">
+        <div id="res-total" class="stat-num"></div>
+        <p>Total</p>
+      </div>
+    </div>
+
+    <div id="res-mistakes-section">
+      <h3>Words to review:</h3>
+      <div id="res-mistakes-list"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goHome()">Home</button>
+      <button class="btn-secondary" onclick="restartSameMode()">Try Again</button>
+    </div>
+  </div>
+
+
+  <script src="js/words.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dictation.js"></script>
+  <script src="js/flashcard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+sql -structural query language
+- used to communicate with relational database
+- databases - sql,mysql
+
+ACTIVITIES- 
+1. write query for create table - create table student{
+    primary key: id, name : varchar, age:int
+}
+2. insert - insert into student values()
+3. select
+4. update - update student set age = 21 where id 1
+5. delete
+
+syntax for get,post,update,delete
+--> 
+1. app.get('/student', (req,res)=>{
+    res.send('GET request: get info ')
+});
+
+2. app.post('/student', (req,res)=>{
+    res.send('POST request: create ')
+});
+
+3. app.put('/student', (req,res)=>{
+    res.send('GET request: update info ')
+});
+
+rebrush sql - queries,join,stored procedure, primary key, foreign key, union,views, sencond-last/highest salary
+
+CONNECTING NODE.JS WITH SQL DATABASE--
+- we used node.js backend to connect database
+- npm install mysql 
+
+npm init -y
+npm 
+
+angular,react,sql

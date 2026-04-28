@@ -1,0 +1,13 @@
+<h1>Student details</h1>
+<h2>Name : {{fname}}</h2>
+<h2>Age : {{age}}</h2>
+<h2>Email : {{email}}</h2>
+
+<input [(ngModel)]="fname" placeholder="Enter name">
+<br><br>
+<input [(ngModel)]="age" placeholder="Enter age">
+<br><br>
+<input [(ngModel)]="email" placeholder="Enter email">
+<br><br>
+
+<button (click)="updateAdmin()">Update Admin</button>

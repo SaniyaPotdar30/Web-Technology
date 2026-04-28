@@ -1,0 +1,71 @@
+<!-- add-movie.component.html -->
+<div class="container">
+  <h1>Add New Movie</h1>
+  <p class="subtitle">Fill in the details to add a movie</p>
+
+  <!-- Template-driven form using ngModel for two-way data binding -->
+  <form class="movie-form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="title">Movie Title:</label>
+      <!-- [(ngModel)] = two-way data binding: syncs between input and newMovie.title -->
+      <input
+        type="text"
+        id="title"
+        name="title"
+        [(ngModel)]="newMovie.title"
+        placeholder="Enter movie title"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="genre">Genre:</label>
+      <select id="genre" name="genre" [(ngModel)]="newMovie.genre" required>
+        <option value="">-- Select Genre --</option>
+        <option value="Action">Action</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Animation">Animation</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating (1 - 10):</label>
+      <input
+        type="number"
+        id="rating"
+        name="rating"
+        [(ngModel)]="newMovie.rating"
+        min="1"
+        max="10"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="newMovie.description"
+        placeholder="Enter a short description"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Display success or error messages -->
+    <p class="message" *ngIf="successMessage">{{ successMessage }}</p>
+
+    <div class="btn-group">
+      <button type="submit" class="btn-primary">Add Movie</button>
+      <button type="button" class="btn-secondary" (click)="goBack()">← Back to List</button>
+    </div>
+
+  </form>
+</div>

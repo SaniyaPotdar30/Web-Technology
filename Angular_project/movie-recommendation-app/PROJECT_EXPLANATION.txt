@@ -1,0 +1,373 @@
+
+=============================================================
+  MOVIE RECOMMENDATION APP — PROJECT EXPLANATION (SIMPLE)
+=============================================================
+
+WHAT IS THIS PROJECT?
+----------------------
+This is a simple Movie Recommendation App built using Angular.
+It lets you:
+  - See a list of movies
+  - Click a movie to view its details
+  - Add a new movie using a form
+
+There is NO database or backend server. All movie data is stored
+in the browser's LocalStorage, meaning your movies are saved even if you refresh or close the app.
+
+WHAT IS ANGULAR?
+----------------
+Angular is a framework (a ready-made toolkit) for building web apps.
+It uses:
+  - TypeScript (.ts files) — like JavaScript but with types
+  - HTML (.html files) — for what the page looks like
+  - CSS (.css files) — for the visual styling (colors, spacing, etc.)
+
+Angular breaks the app into "Components". Each component is one
+piece of the page (like the navbar, the movie list, the form, etc.)
+
+
+=============================================================
+  FOLDER STRUCTURE (inside src/app/)
+=============================================================
+
+src/
+└── app/
+    ├── app.component.ts          ← Root component (main entry point)
+    ├── app.component.html        ← Root HTML (navbar + router outlet)
+    ├── app.component.css         ← Navbar styling
+    ├── app.routes.ts             ← URL routing (which page to show for which URL)
+    ├── app.config.ts             ← App setup/configuration
+    │
+    ├── models/
+    │   └── movie.model.ts        ← Defines what a "Movie" looks like (its fields)
+    │
+    ├── services/
+    │   └── movie.service.ts      ← Stores the movie data + functions to get/add movies
+    │
+    ├── movie-list/               ← Page: shows all movies in a table
+    │   ├── movie-list.component.ts
+    │   ├── movie-list.component.html
+    │   └── movie-list.component.css
+    │
+    ├── movie-detail/             ← Page: shows details of one selected movie
+    │   ├── movie-detail.component.ts
+    │   ├── movie-detail.component.html
+    │   └── movie-detail.component.css
+    │
+    └── add-movie/                ← Page: form to add a new movie
+        ├── add-movie.component.ts
+        ├── add-movie.component.html
+        └── add-movie.component.css
+
+
+=============================================================
+  FILE-BY-FILE EXPLANATION
+=============================================================
+
+------------------------------------------------------------
+1. models/movie.model.ts
+------------------------------------------------------------
+WHAT IT DOES:
+  Defines what a "Movie" object looks like — what fields it has.
+  Think of it as a template or blueprint for a movie.
+
+CODE EXPLAINED:
+  export interface Movie {
+    id: number;          // unique number like 1, 2, 3
+    title: string;       // movie name like "Inception"
+    genre: string;       // like "Action", "Comedy"
+    rating: number;      // score from 1 to 10
+    description: string; // short summary of the movie
+  }
+
+WHY IT EXISTS:
+  So that everywhere in the app we know exactly what a Movie contains.
+  TypeScript uses this to catch mistakes (e.g., if you forget to add a title).
+
+
+------------------------------------------------------------
+2. services/movie.service.ts
+------------------------------------------------------------
+WHAT IT DOES:
+  This is the "data store" of the app. It holds all the movies
+  and provides functions to get or add movies using LocalStorage.
+  It acts as a shared helper that any component can use.
+
+KEY PARTS:
+  - LocalStorage Integration:
+      Instead of an in-memory array, it saves movies directly to the browser's LocalStorage. If it's the first time, it loads a default list.
+
+  - getMovies()
+      Reads from LocalStorage, parses the JSON data, and returns the full list of all movies.
+
+  - getMovieById(id)
+      Fetches movies from LocalStorage, searches for and returns one movie by its ID number.
+
+  - addMovie(movie)
+      Fetches existing movies, generates a new unique ID, adds the new movie, and saves the updated list back to LocalStorage.
+      
+  - saveMovies(movies)
+      A helper function that converts the movie array to a JSON string and saves it to LocalStorage.
+
+  - @Injectable({ providedIn: 'root' })
+      This tells Angular: "Make one shared copy of this service for the whole app."
+      So all components share the same movie list.
+
+
+------------------------------------------------------------
+3. app.component.ts + app.component.html + app.component.css
+------------------------------------------------------------
+WHAT IT DOES:
+  This is the ROOT component — the main shell of the app.
+  It always stays on screen and shows:
+    - The navbar at the top
+    - The current page content below it (using <router-outlet>)
+
+HTML EXPLAINED (app.component.html):
+  <nav class="navbar">              ← The top navigation bar
+    <div class="nav-brand">         ← App name on the left
+    <div class="nav-links">         ← Links: "Movies" and "Add Movie"
+      <a routerLink="/movies">      ← Clicking this goes to the movies list
+      <a routerLink="/add">         ← Clicking this goes to the add movie form
+  </nav>
+  <router-outlet>                   ← This is where each page is loaded
+
+  routerLinkActive="active" → automatically adds an "active" style to
+  whichever link matches the current URL.
+
+CSS (app.component.css):
+  Just styles the navbar — dark background, white text, links on the right.
+
+
+------------------------------------------------------------
+4. app.routes.ts
+------------------------------------------------------------
+WHAT IT DOES:
+  Tells Angular: "For this URL, show this component (page)."
+  This is called Routing.
+
+ROUTES DEFINED:
+  URL "/"          → redirects to "/movies" (the default page)
+  URL "/movies"    → shows MovieListComponent (the movie table)
+  URL "/add"       → shows AddMovieComponent (the add form)
+  URL "/movie/:id" → shows MovieDetailComponent for the movie with that ID
+                     (:id is a variable — e.g., /movie/2 means movie with ID 2)
+
+
+------------------------------------------------------------
+5. app.config.ts
+------------------------------------------------------------
+WHAT IT DOES:
+  Sets up the Angular application — specifically enables the router
+  by calling provideRouter(routes).
+  You don't need to change this file for normal features.
+
+
+------------------------------------------------------------
+6. movie-list/ (3 files)
+------------------------------------------------------------
+This is the MAIN PAGE of the app. URL: /movies
+
+--- movie-list.component.ts ---
+WHAT IT DOES:
+  Loads the list of movies from MovieService and provides
+  navigation functions.
+
+KEY PARTS:
+  - movies: Movie[] = []
+      Empty array that will be filled when the page loads.
+
+  - constructor(private movieService: MovieService, private router: Router)
+      Angular automatically "injects" (provides) MovieService and Router.
+
+  - ngOnInit()
+      Runs automatically when the page first loads.
+      Calls movieService.getMovies() and stores the result in this.movies.
+
+  - goToAddMovie()
+      Navigates the user to the /add page when they click "Add New Movie".
+
+  - viewDetails(id)
+      Navigates to /movie/1 (or whatever ID) when "View Details" is clicked.
+
+--- movie-list.component.html ---
+WHAT IT DOES:
+  Displays the list of movies in a simple HTML table.
+
+KEY ANGULAR SYNTAX USED:
+  *ngFor="let movie of movies"
+      Loop: repeats the <tr> row for EACH movie in the array.
+
+  {{ movie.title }}
+      Data binding: displays the value of movie.title on screen.
+
+  (click)="viewDetails(movie.id)"
+      Event binding: when button is clicked, calls the viewDetails() function.
+
+  *ngIf="movies.length === 0"
+      Conditional: only shows "No movies found" message if list is empty.
+
+--- movie-list.component.css ---
+  Styles the table — headings, row borders, spacing, buttons.
+
+
+------------------------------------------------------------
+7. movie-detail/ (3 files)
+------------------------------------------------------------
+This is the DETAIL PAGE. URL: /movie/:id
+
+--- movie-detail.component.ts ---
+WHAT IT DOES:
+  Reads the movie ID from the URL and fetches that movie's details.
+
+KEY PARTS:
+  - movie: Movie | undefined
+      Will hold the fetched movie, or be undefined if not found.
+
+  - ActivatedRoute
+      Reads the current URL. For /movie/2, it reads the "2".
+
+  - ngOnInit()
+      1. Gets the ID from the URL: route.snapshot.paramMap.get('id')
+      2. Converts it to a number: Number(...)
+      3. Calls movieService.getMovieById(id) to fetch that movie.
+
+  - goBack()
+      Sends the user back to /movies.
+
+--- movie-detail.component.html ---
+WHAT IT DOES:
+  Shows the movie details in a table (Genre, Rating, ID, Description).
+
+KEY ANGULAR SYNTAX:
+  *ngIf="movie; else notFound"
+      If movie was found, show its details.
+      Otherwise show the #notFound template.
+
+  <ng-template #notFound>
+      The fallback content shown when movie is not found.
+
+--- movie-detail.component.css ---
+  Styles the detail table and the Back button.
+
+
+------------------------------------------------------------
+8. add-movie/ (3 files)
+------------------------------------------------------------
+This is the ADD MOVIE FORM PAGE. URL: /add
+
+--- add-movie.component.ts ---
+WHAT IT DOES:
+  Manages the form for adding a new movie.
+
+KEY PARTS:
+  - newMovie: Movie = { id: 0, title: '', genre: '', rating: 1, description: '' }
+      An empty movie object. The form is connected to this object.
+
+  - successMessage: string = ''
+      Stores messages like "Movie added!" or "Please fill all fields."
+
+  - onSubmit()
+      Called when the form is submitted.
+      Steps:
+        1. Check that title, genre, description are not empty.
+        2. Check that rating is between 1 and 10.
+        3. Call movieService.addMovie() to save the movie.
+        4. Show "Movie added successfully!" message.
+        5. After 1.5 seconds, go back to the movie list.
+
+  - goBack()
+      Goes back to /movies without saving anything.
+
+--- add-movie.component.html ---
+WHAT IT DOES:
+  The HTML form with 4 input fields.
+
+KEY ANGULAR SYNTAX:
+  (ngSubmit)="onSubmit()"
+      When the form is submitted, call onSubmit().
+
+  [(ngModel)]="newMovie.title"
+      TWO-WAY DATA BINDING:
+        - When user types in the input, newMovie.title is updated automatically.
+        - If newMovie.title changes in code, the input shows it.
+      The [( )] syntax means it works in BOTH directions.
+
+  *ngIf="successMessage"
+      Only shows the success/error message if it is not empty.
+
+--- add-movie.component.css ---
+  Styles the form inputs, labels, and buttons.
+
+
+=============================================================
+  HOW THE APP WORKS — STEP BY STEP (USER FLOW)
+=============================================================
+
+STEP 1: User opens the app → URL: http://localhost:4200/
+  → Automatically redirected to /movies
+
+STEP 2: Movie List Page (/movies)
+  → ngOnInit() runs in MovieListComponent
+  → Calls movieService.getMovies()
+  → Gets back array of 3 movies
+  → *ngFor displays each movie as a table row
+
+STEP 3a: User clicks "View Details"
+  → viewDetails(id) is called
+  → Router navigates to /movie/1 (for example)
+  → MovieDetailComponent loads
+  → ngOnInit() reads ID from URL
+  → Calls movieService.getMovieById(1)
+  → Displays the matching movie in a table
+
+STEP 3b: User clicks "Add New Movie"
+  → goToAddMovie() is called
+  → Router navigates to /add
+  → AddMovieComponent loads
+  → User fills the form (ngModel updates newMovie live)
+  → User clicks "Add Movie" → onSubmit() runs
+  → Movie is added and saved to the browser's LocalStorage in MovieService
+  → After 1.5 seconds, user is taken back to /movies
+  → *ngFor now shows the new movie in the table
+
+
+=============================================================
+  KEY ANGULAR CONCEPTS USED IN THIS PROJECT
+=============================================================
+
+CONCEPT              WHAT IT MEANS
+-----------          -------------------------------------------
+Component            A reusable piece of the page (navbar, form, list, etc.)
+@Component           Decorator that marks a class as a component
+Template             The HTML file of a component
+Data Binding {{ }}   Displays a variable's value in HTML
+Event Binding (  )   Calls a function when an event (click, submit) happens
+Two-way Binding [()]  Syncs a variable and an input field in both directions
+*ngFor               Loop — repeats HTML for each item in a list
+*ngIf                Condition — shows/hides HTML based on true/false
+Service              A shared class that holds data/logic used by components
+@Injectable          Marks a class as a service (injectable)
+Router               Handles navigation between pages/URLs
+RouterLink           Directive to create navigation links in HTML
+ActivatedRoute       Reads the current URL and its parameters
+ngOnInit()           A lifecycle hook that runs when a component first loads
+Standalone           Component works on its own without NgModule
+
+
+=============================================================
+  TO RUN THE PROJECT
+=============================================================
+
+1. Open a terminal inside the project folder:
+   cd d:\Web-Technology\Angular_project\movie-recommendation-app
+
+2. Run this command:
+   ng serve
+
+3. Open the browser and go to:
+   http://localhost:4200
+
+That's it! The app will reload automatically if you change any file.
+
+=============================================================
